@@ -1,55 +1,42 @@
-import io
-import base64
+import swatch
+import llm
+import subprocess
 import colorsys
-from PIL import Image
+import time
+from progress import ProgressBar
 
-def img_to_b64(img):
-    buf = io.BytesIO()
-    img.save(buf, format="PNG")
-    buf.seek(0)
-    img_b64 = base64.b64encode(buf.read()).decode("utf-8")
-    return f"data:image/png;base64,{img_b64}"
+def icat(img):
+    img.save("tmp.png")
+    subprocess.run("kitten icat --align left tmp.png".split())
+    time.sleep(0.01)
+    subprocess.run("rm tmp.png".split())
 
-def make_swatch_img(rgb, size=30):
-    """Create a solid RGB swatch of given size."""
-    return Image.new("RGB", (size, size), rgb)
+def hue_to_rgb(h_idx, n_bins=36, s=1.0, v=1.0):
+    h = (h_idx / n_bins)  # in [0,1)
+    r, g, b = colorsys.hsv_to_rgb(h, s, v)
+    return (int(r * 255), int(g * 255), int(b * 255))
 
-def make_swatch_b64(rgb, size=30):
-    return img_to_b64(make_swatch_img(rgb, size))
+prompt = "You see a solid-colored square. Name its basic color category in English. Answer with only a single word."
+samples = []
+for idx in [0, 6, 12, 18, 24, 30]:
+    rgb = hue_to_rgb(idx, n_bins=36, s=1.0, v=1.0)
+    samples.append(rgb)
 
-import openai
-import google.generativeai as genai
-import local
+progress = ProgressBar(len(samples) * len(llm.MODELS), prefix = 'Querying:')
 
-CHATGPT = openai.OpenAI(api_key=local.OPENAI_API_KEY)
-CHATGPT_MODEL = "gpt-5-nano"
-def query_chatgpt(img, prompt):
-    input = [{
-        "role": "user",
-        "content": [
-            {"type": "input_image", "image_url": img_to_b64(img)}, # for chatgpt, pass the image as a b64 uri
-            {"type": "input_text", "text": prompt},
-        ],
-    }]
-    resp = CHATGPT.responses.create(model=CHATGPT_MODEL, input=input)
-    for r in resp.output:
-        if r.type == "message": return r.content[0].text
-    return "<<ERR: No response message found>>"
+results = []
+for rgb in samples:
+    img = swatch.make_img(rgb)
+    msgs = []
+    for model in llm.MODELS:
+        msgs.append(llm.query(model, img, prompt))
+        progress.iterate()
+    results.append((rgb, img, msgs))
 
-genai.configure(api_key=local.GOOGLE_API_KEY)
-GEMINI_MODEL = genai.GenerativeModel('gemini-2.5-flash')
-def query_gemini(img, prompt):
-    input = [img, prompt] # for gemini, just pass the image object
-    return GEMINI_MODEL.generate_content(input).text
-
-def query_rgb(model, rgb, prompt):
-    if model == "chatgpt":
-        return query_chatgpt(make_swatch_img(rgb), prompt)
-    if model == "gemini":
-        return query_gemini(make_swatch_img(rgb), prompt)
-    return f"<<ERR: Unknown model ({model})>>"
-
-basic_color_prompt = "You see a solid-colored square. Name its basic color category in English. Answer with only a single word."
-
-print(query_rgb("chatgpt", (255,0,0), basic_color_prompt))
-print(query_rgb("gemini", (255,0,0), basic_color_prompt))
+print()
+for r in results:
+    rgb,img,msgs = r
+    print(f"rgb: {rgb}")
+    for i,model in enumerate(llm.MODELS):
+        print(f"{model}: {msgs[i]}")
+    icat(img)
