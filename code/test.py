@@ -1,28 +1,34 @@
-import swatch
-import llm
 import subprocess
 import colorsys
 import time
-from progress import ProgressBar
+import csv
+import numpy as np
 
-def icat(img):
+from progress import ProgressBar
+import swatch
+import llm
+
+def run(cmd):
+    subprocess.run(cmd, shell=True)
+
+def icat(img, next_txt=None):
     img.save("tmp.png")
-    subprocess.run("kitten icat --align left tmp.png".split())
+    run("kitten icat -n --align left tmp.png" + (" && echo \r" + next_txt if next_txt != None else ""))
     time.sleep(0.01)
-    subprocess.run("rm tmp.png".split())
+    run("rm tmp.png")
 
 def hue_to_rgb(h_idx, n_bins=36, s=1.0, v=1.0):
     h = (h_idx / n_bins)  # in [0,1)
     r, g, b = colorsys.hsv_to_rgb(h, s, v)
     return (int(r * 255), int(g * 255), int(b * 255))
 
-prompt = "You see a solid-colored square. Name its basic color category in English. Answer with only a single word."
-samples = []
-for idx in [0, 6, 12, 18, 24, 30]:
-    rgb = hue_to_rgb(idx, n_bins=36, s=1.0, v=1.0)
-    samples.append(rgb)
+lang = "English"
+prompt = f"You see a solid-colored square. Name its color in {lang}. You may use color names that are as specific or as general as you want. Do not elaborate on or decorate your response, limit it to the name only."
 
-progress = ProgressBar(len(samples) * len(llm.MODELS), prefix = 'Querying:')
+n_samples = 100
+samples = list(map(tuple, np.random.randint(0, 256, size=(n_samples,3), dtype=np.uint8)))
+
+prog_bar = ProgressBar(len(samples) * len(llm.MODELS), prefix = 'Querying:')
 
 results = []
 for rgb in samples:
@@ -30,13 +36,21 @@ for rgb in samples:
     msgs = []
     for model in llm.MODELS:
         msgs.append(llm.query(model, img, prompt))
-        progress.iterate()
+        prog_bar.iterate()
     results.append((rgb, img, msgs))
 
-print()
-for r in results:
-    rgb,img,msgs = r
-    print(f"rgb: {rgb}")
-    for i,model in enumerate(llm.MODELS):
-        print(f"{model}: {msgs[i]}")
-    icat(img)
+with open('results.csv','a') as f:
+    writer = csv.writer(f)
+
+    for res in results:
+        rgb,img,msgs = res
+        r,g,b = rgb
+        writer.writerow([r,g,b,lang.lower()] + msgs)
+
+        print(f"\nrgb: {rgb}")
+        icat(img, "responses:")
+        for i,model in enumerate(llm.MODELS):
+            if len(msgs):
+                print(f"{model}: {msgs[i]}")
+            else:
+                print("test")
