@@ -1,13 +1,12 @@
-import local # local.py contains API keys
-import swatch
-import openai
-import google.generativeai as genai
-
+import tools.local as keys # local.py contains API keys
+import tools.swatch as swatch
 
 # OPENAI CHATGPT
 
-CHATGPT_MODEL = "gpt-5-nano"
-CHATGPT = openai.OpenAI(api_key=local.OPENAI_API_KEY)
+import openai
+
+CHATGPT_MODEL = "gpt-5.4-mini-2026-03-17"
+CHATGPT = openai.OpenAI(api_key=keys.OPENAI_API_KEY)
 
 def query_chatgpt(img, prompt):
     input = [{
@@ -26,9 +25,11 @@ def query_chatgpt(img, prompt):
 
 # GOOGLE GEMINI
 
+import google.generativeai as genai
+
 GEMINI_MODEL = "gemini-2.5-flash"
 GEMINI = genai.GenerativeModel(GEMINI_MODEL)
-genai.configure(api_key=local.GOOGLE_API_KEY)
+genai.configure(api_key=keys.GOOGLE_API_KEY)
 
 def query_gemini(img, prompt):
     input = [img, prompt] # for gemini, just pass the image object

@@ -1,0 +1,65 @@
+r,g,b,lang_code,chatgpt,gemini
+32,32,32,en,dark gray,Black
+32,32,96,en,dark blue,Indigo
+32,32,160,en,blue,Royal Blue
+32,32,224,en,blue,Blue
+32,96,32,en,dark green,Dark green
+32,96,96,en,teal,Dark Teal
+32,96,160,en,blue,Blue
+32,96,224,en,blue,Blue
+32,160,32,en,green,Kelly green
+32,160,96,en,green,Kelly green
+32,160,160,en,teal,Teal
+32,160,224,en,blue,Dodger Blue
+32,224,32,en,green,Lime green
+32,224,96,en,green,Lime green
+32,224,160,en,turquoise,Teal
+32,224,224,en,turquoise,Cyan
+96,32,32,en,dark red,Maroon
+96,32,96,en,purple,Purple
+96,32,160,en,Purple,Purple
+96,32,224,en,purple,Purple
+96,96,32,en,olive,Olive green
+96,96,96,en,dark gray,Dark gray
+96,96,160,en,Slate blue,Slate blue
+96,96,224,en,Purple,Blue-violet
+96,160,32,en,green,Green
+96,160,96,en,green,Pine green
+96,160,160,en,teal,Teal
+96,160,224,en,blue,Cornflower Blue
+96,224,32,en,lime green,Lime green
+96,224,96,en,green,Lime green
+96,224,160,en,mint green,Mint green
+96,224,224,en,turquoise,Turquoise
+160,32,32,en,dark red,Wine red
+160,32,96,en,magenta,Magenta
+160,32,160,en,purple,Purple
+160,32,224,en,purple,Purple
+160,96,32,en,brown,Russet
+160,96,96,en,dusky rose,Dusty rose
+160,96,160,en,purple,Orchid
+160,96,224,en,purple,Violet
+160,160,32,en,olive,Olive green
+160,160,96,en,olive green,Olive
+160,160,160,en,Gray,Gray
+160,160,224,en,periwinkle,Lavender
+160,224,32,en,lime green,Lime green
+160,224,96,en,light green,Lime green
+160,224,160,en,light green,Light green
+160,224,224,en,teal,Powder Blue
+224,32,32,en,red,Red
+224,32,96,en,magenta,Hot pink
+224,32,160,en,magenta,Hot pink
+224,32,224,en,magenta,Magenta
+224,96,32,en,orange,Burnt orange
+224,96,96,en,red,Coral
+224,96,160,en,pink,Pink
+224,96,224,en,purple,Magenta
+224,160,32,en,mustard yellow,Mustard
+224,160,96,en,tan,Tan
+224,160,160,en,dusty rose,Dusty pink
+224,160,224,en,lavender,Lavender
+224,224,32,en,yellow,Yellow
+224,224,96,en,yellow,Chartreuse
+224,224,160,en,light olive green,Pale yellow
+224,224,224,en,light gray,Grey

@@ -1,6 +1,5 @@
 import io
 import base64
-import colorsys
 from PIL import Image
 
 def to_b64(img):

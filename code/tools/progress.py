@@ -3,6 +3,13 @@
 # Retrieved 2026-02-23, License - CC BY-SA 4.0
 # Heavily modified by me
 
+import time
+
+def timefmt(s):
+    m = s // 60
+    s %= 60
+    return f"{int(m)}m {s:.2f}s" if m > 0 else f"{s:.2f}s"
+
 class ProgressBar:
     def __init__(self, total, prefix = '', suffix = '', decimals = 1, length = 100, fill = '⬤', print_end = "\r"):
         """
@@ -25,6 +32,7 @@ class ProgressBar:
         self.length = length
         self.fill = fill
         self.print_end = print_end
+        self.start_t = time.time()
 
         self.print_bar()
 
@@ -33,7 +41,7 @@ class ProgressBar:
         percent = ("{0:." + str(self.decimals) + "f}").format(100 * (self.i / float(self.total)))
         filled_len = int(self.length * self.i // self.total)
         bar = self.fill * filled_len + '⋅' * (self.length - filled_len)
-        print(f'\r{self.prefix} ({bar}) [{self.i}/{self.total}] {percent}% {self.suffix}', end = self.print_end)
+        print(f'\r{self.prefix} ({bar}) [{self.i}/{self.total}] {percent}% ({timefmt(time.time() - self.start_t)}) {self.suffix}', end = self.print_end)
         if self.i == self.total: print() # newline if complete
 
     def iterate(self, i=None):
