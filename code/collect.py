@@ -1,29 +1,55 @@
 import sys
 
-def print_usage():
-    print(f"Usage: python {sys.argv[0]} [--debug] [--hue] <N_SAMPLES=int|'test'> <OUT_PATH=str>")
+def err_exit(err_msg=None):
+    if err_msg: print(f"[ERROR] {err_msg}")
+    print(f"Usage: python {sys.argv[0]} <LANG_CODE> <'full'|'hue'> <COUNT:int> <OUT_DIR> [--name=FILE_NAME] [--print]")
+    print(f"       python {sys.argv[0]} <LANG_CODE> test-cube <OUT_DIR> [--name=FILE_NAME] [--print]")
+    print(f"Notes:")
+    print(f"       If the output file already exists, data will be appended.")
+    exit(1)
 
 args = [arg for arg in sys.argv[1:] if not arg.startswith("-")]
 opts = [opt for opt in sys.argv[1:] if opt.startswith("-")]
 
-if len(args) != 2:
-    print("Incorrect arguments")
-    print_usage()
-    exit(1)
+if "--help" in opts: err_exit()
 
-test = args[0] == "test"
-out_path = args[1] # validate path?
+print_results = False
+file_name = None
+for opt in opts:
+    if opt == "-p" or opt == "--print": print_results = True
+    if opt.startswith("-n") or opt.startswith("--name"):
+        vals = opt.split("=")
+        if len(vals) != 2: err_exit("Invalid arguments")
+        file_name = vals[1]
+        if not file_name.endswith(".csv"): err_exit("File name must end with '.csv'")
 
-hue_line = True if "-h" in opts or "--hue" in opts else False
-debug = True if "-d" in opts or "--debug" in opts else False
+rgb_range = None
+count = None
+test = False
 
-if not test:
-    try:
-        n = int(args[0])
-    except:
-        print("Invalid N_SAMPLES value: " + args[0])
-        print_usage()
-        exit(1)
+if len(args) == 4:
+    lang_code, rgb_range, count, out_dir = args
+    if rgb_range not in ["full","hue"]: err_exit("Invalid arguments")
+    try: count = int(count)
+    except: err_exit("Invalid COUNT: " + count)
+elif len(args) == 3:
+    lang_code, test, out_dir = args
+    test = (test == "test-cube")
+    if not test: err_exit(f"Invalid arguments")
+else:
+    err_exit("Invalid arguments")
+
+if not out_dir.endswith("/"): out_dir += "/"
+out_path = out_dir + (file_name if file_name else f"{lang_code}-{"test-cube" if test else f"{rgb_range}-raw"}.csv")
+
+lang_prompts = { # ISO 639
+    "en": "You see a solid-colored square. Name its color in English. You may use color names that are as specific or as general as you want. Do not elaborate on or decorate your response, limit it to the name only.",
+    # en: "You see a solid-colored square. Your task is to name its color in English. First, describe the color with a short sentence, ending with a period. Then, give me the hex code of the color. Finally, your response should end with your chosen color name, which may be as specific or as general as you want. I'm trusting you on this, don't let me down."
+    "zh": "你看到一个纯色的正方形。用中文说出它的颜色。你可以使用任意具体或笼统的颜色名称。不要对回答进行任何修饰或扩展，只需说出颜色名称。"
+}
+
+if lang_code not in lang_prompts.keys(): err_exit(f"Unsupported LANG_CODE: {lang_code}")
+prompt = lang_prompts[lang_code]
 
 import subprocess
 import time
@@ -35,29 +61,17 @@ import tools.llm as llm
 import tools.samples as samples
 from tools.progress import ProgressBar
 
-def run(cmd):
-    subprocess.run(cmd, shell=True)
-
 def icat(img, next_txt=None):
+    def run(cmd):
+        subprocess.run(cmd, shell=True)
     img.save("tmp.png")
     run("kitten icat -n --align left tmp.png" + (" && echo \r" + next_txt if next_txt != None else ""))
     time.sleep(0.01)
     run("rm tmp.png")
 
-
-lang_codes = { # ISO 639
-    "en": "English",
-    "zh": "Chinese (simplified)"
-}
-
-lang_code = "en"
-prompt = f"You see a solid-colored square. Name its color in {lang_codes[lang_code]}. You may use color names that are as specific or as general as you want. Do not elaborate on or decorate your response, limit it to the name only."
-# prompt = f"You see a solid-colored square. Your task is to name its color in {lang_codes[lang_code]}. First, describe the color with a short sentence, ending with a period. Then, give me the hex code of the color. Finally, your response should end with your chosen color name, which may be as specific or as general as you want. I'm trusting you on this, don't let me down."
-
-if not out_path.endswith(".csv"): out_path += ".csv"
 file_exists = os.path.exists(out_path)
 
-rgb_data = samples.test_cube() if test else (samples.hue_line(n) if hue_line else samples.full_cube(n))
+rgb_data = samples.test_cube() if test else (samples.hue_line(count) if rgb_range == "hue" else samples.full_cube(count))
 prog_bar = ProgressBar(len(rgb_data) * len(llm.MODELS), prefix = 'Querying:')
 
 with open(out_path,'a') as f:
@@ -75,7 +89,7 @@ with open(out_path,'a') as f:
         writer.writerow([r,g,b,lang_code] + msgs)
         f.flush()
 
-        if debug:
+        if print_results:
             print(f"\nrgb: {tuple(map(int, rgb))}")
             icat(img, "responses:")
             for i,model in enumerate(llm.MODELS):

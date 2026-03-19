@@ -24,13 +24,13 @@ with open(csv_path,'r') as f:
 
 rgb_data = np.array([np.array(xi) for xi in rgb_data])
 
-print("mean: ", rgb_data.mean(axis=0))   # per channel
-print("std:  ", rgb_data.std(axis=0))    # per channel
+print("mean: ", rgb_data.mean(axis=0))
+print("std:  ", rgb_data.std(axis=0))
 
 for i, ch in enumerate("RGB"):
     counts, _ = np.histogram(rgb_data[:, i], bins=256, range=(0, 256))
     stat, p = chisquare(counts)
-    print(f"{ch}: chi2={stat:.2f}, p={p:.4f}")  # p >> 0.05 means uniform
+    print(f"{ch}: chi2={stat:.2f}, p={p:.4f}") # p >> 0.05 means uniform
 
 import matplotlib.pyplot as plt
 
