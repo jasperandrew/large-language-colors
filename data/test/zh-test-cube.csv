@@ -1,0 +1,65 @@
+r,g,b,lang_code,chatgpt,gemini
+32,32,32,zh,黑色,黑色 , Black, Black
+32,32,96,zh,紫色,深蓝色 , Purple, Dark Blue
+32,32,160,zh,蓝色,蓝色 , Blue, Blue
+32,32,224,zh,蓝色,蓝色 , Blue, Blue
+32,96,32,zh,绿色,墨绿色 , Green, Forest Green
+32,96,96,zh,青绿色,鸭绿色 , Teal, Duck Green
+32,96,160,zh,蓝色,蓝色 , Blue, Blue
+32,96,224,zh,蓝色,蓝色 , Blue, Blue
+32,160,32,zh,绿色,绿色 , Green, Green
+32,160,96,zh,绿色,绿色 , Green, Green
+32,160,160,zh,青绿色,蓝绿色 , Teal, Blue-Green
+32,160,224,zh,蓝色,蓝色 , Blue, Blue
+32,224,32,zh,绿色,绿色 , Green, Green
+32,224,96,zh,绿色,绿色 , Green, Green
+32,224,160,zh,绿色,青色 , Green, Cyan
+32,224,224,zh,青色,青色 , Cyan, Cyan
+96,32,32,zh,棕色,酒红色 , Brown, Burgundy
+96,32,96,zh,紫色,深紫色 , Purple, Deep Purple
+96,32,160,zh,紫色,紫色 , Purple, Purple
+96,32,224,zh,紫色,紫色 , Purple, Purple
+96,96,32,zh,橄榄绿,橄榄绿 , Olive Green, Olive Green
+96,96,96,zh,灰色,深灰色 , Gray, Dark Gray
+96,96,160,zh,紫色,紫色 , Purple, Purple
+96,96,224,zh,蓝色,紫蓝色 , Blue, Violet-Blue
+96,160,32,zh,绿色,绿色 , Green, Green
+96,160,96,zh,绿色,绿色 , Green, Green
+96,160,160,zh,青绿色,青色 , Teal, Cyan
+96,160,224,zh,蓝色,蓝色 , Blue, Blue
+96,224,32,zh,绿色,柠檬绿 , Green, Lemon Green
+96,224,96,zh,绿色,草绿色 , Green, Grass Green
+96,224,160,zh,绿色,青色 , Green, Cyan
+96,224,224,zh,青绿色,绿松石色 , Teal, Turquoise
+160,32,32,zh,红色,暗红色 , Red, Dark Red
+160,32,96,zh,紫红色,品红色 , Magenta, Fuchsia
+160,32,160,zh,紫色,紫红色 , Purple, Magenta
+160,32,224,zh,紫色,紫色 , Purple, Purple
+160,96,32,zh,棕色,赤褐色 , Brown, Russet
+160,96,96,zh,棕色,豆沙色 , Brown, Bean Paste
+160,96,160,zh,紫色,紫色 , Purple, Purple
+160,96,224,zh,紫色,紫色 , Purple, Purple
+160,160,32,zh,黄绿色,橄榄绿 , Yellow-Green, Olive Green
+160,160,96,zh,卡其色,橄榄绿 , Khaki, Olive Green
+160,160,160,zh,灰色,灰色 , Gray, Gray
+160,160,224,zh,淡紫色,淡紫色 , Lilac, Lilac
+160,224,32,zh,绿色,柠檬绿 , Green, Lemon Green
+160,224,96,zh,绿色,嫩绿色 , Green, Fresh Green
+160,224,160,zh,浅绿色,浅绿色 , Light Green, Light Green
+160,224,224,zh,浅青色,浅蓝色 , Light Cyan, Light Blue
+224,32,32,zh,红色,红色 , Red, Red
+224,32,96,zh,粉色,玫红色 , Pink, Rose Pink
+224,32,160,zh,粉色,玫红色 , Pink, Rose Pink
+224,32,224,zh,洋红色,品红色 , Magenta, Fuchsia
+224,96,32,zh,橙色,橙色 , Orange, Orange
+224,96,96,zh,红色,橘红色 , Red, Orange-Red
+224,96,160,zh,粉色,洋红色 , Pink, Magenta
+224,96,224,zh,紫色,品红色 , Purple, Fuchsia
+224,160,32,zh,橙色,金黄色 , Orange, Golden Yellow
+224,160,96,zh,橙色,驼色 , Orange, Camel
+224,160,160,zh,粉红色,藕粉色 , Pink, Lotus Root Pink
+224,160,224,zh,粉色,淡紫色 , Pink, Lilac
+224,224,32,zh,黄色,黄色 , Yellow, Yellow
+224,224,96,zh,黄色,黄绿色 , Yellow, Yellow-Green
+224,224,160,zh,浅黄,淡黄色 , Light Yellow, Pale Yellow
+224,224,224,zh,灰色,灰色 , Gray, Gray
