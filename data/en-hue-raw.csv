@@ -6623,3 +6623,379 @@ r,g,b,lang_code,chatgpt,gemini
 0,19,255,en,blue,Blue
 0,255,255,en,cyan,Cyan
 36,255,0,en,green,Green
+0,137,255,en,blue,Blue
+0,255,36,en,green,Green
+79,0,255,en,purple,Violet
+0,161,255,en,blue,Blue
+0,185,255,en,cyan,Electric blue
+255,10,0,en,red,Red
+192,255,0,en,lime,Lime green
+133,0,255,en,purple,Purple
+0,252,255,en,cyan,Cyan
+0,255,71,en,green,Lime green
+255,143,0,en,orange,Orange
+152,0,255,en,purple,Violet
+0,255,197,en,turquoise,Cyan
+255,0,57,en,red,Scarlet
+73,255,0,en,green,Lime green
+255,221,0,en,yellow,Yellow
+200,255,0,en,lime,Chartreuse
+182,255,0,en,lime,Lime green
+228,0,255,en,magenta,Fuchsia
+255,0,45,en,red,Red
+28,0,255,en,blue,Blue
+255,0,229,en,magenta,Magenta
+255,70,0,en,orange,Orange
+255,54,0,en,orange,Orange
+255,0,10,en,red,Red
+0,98,255,en,blue,Electric Blue
+0,255,13,en,green,Green
+0,255,164,en,green,Turquoise
+137,0,255,en,purple,Purple
+0,205,255,en,cyan,Cyan
+255,0,29,en,red,Red
+0,36,255,en,blue,Blue
+7,0,255,en,blue,Blue
+94,0,255,en,purple,Violet
+255,22,0,en,red,Red
+0,92,255,en,blue,Blue
+0,225,255,en,cyan,Cyan
+238,0,255,en,magenta,Magenta
+189,255,0,en,lime,Lime green
+255,0,126,en,pink,Hot pink
+255,235,0,en,yellow,Yellow
+200,0,255,en,magenta,Magenta
+0,255,132,en,green,Spring green
+255,0,140,en,magenta,Hot pink
+0,162,255,en,blue,Deep sky blue
+232,255,0,en,yellow,Yellow
+255,20,0,en,red,Red
+20,0,255,en,blue,Blue
+35,0,255,en,blue,Blue
+0,255,246,en,cyan,Cyan
+0,46,255,en,blue,Blue
+0,255,42,en,green,Lime green
+96,255,0,en,lime,Lime green
+0,255,249,en,cyan,Cyan
+202,0,255,en,purple,Magenta
+255,238,0,en,yellow,Yellow
+0,255,1,en,green,Green
+255,0,7,en,red,Red
+255,81,0,en,orange,Orange
+88,255,0,en,green,Lime green
+0,187,255,en,blue,Deep Sky Blue
+222,255,0,en,lime,Yellow
+0,20,255,en,blue,Blue
+0,103,255,en,blue,Blue
+0,239,255,en,cyan,Cyan
+255,180,0,en,orange,Orange
+255,0,166,en,magenta,Fuchsia
+56,255,0,en,green,Lime green
+8,255,0,en,green,Green
+1,0,255,en,blue,Blue
+255,0,107,en,pink,Hot pink
+255,0,45,en,red,Red
+255,182,0,en,orange,Orange
+255,116,0,en,orange,Orange
+54,0,255,en,blue,Blue
+255,0,215,en,magenta,Magenta
+126,0,255,en,purple,Purple
+255,0,81,en,pink,Hot pink
+255,240,0,en,yellow,Yellow
+153,255,0,en,lime,Lime green
+255,0,41,en,red,Red
+255,235,0,en,yellow,Yellow
+0,255,158,en,green,Aqua
+112,255,0,en,lime green,Lime green
+0,255,179,en,turquoise,Teal
+0,255,223,en,turquoise,Turquoise
+110,0,255,en,purple,Purple
+0,255,219,en,turquoise,Cyan
+0,199,255,en,cyan,Bright blue
+0,191,255,en,cyan,Cyan
+255,0,152,en,magenta,Hot pink
+255,170,0,en,orange,Orange
+118,0,255,en,purple,Purple
+0,255,137,en,green,Spring Green
+0,255,241,en,cyan,Cyan
+0,255,164,en,green,Aqua
+255,0,26,en,red,Red
+24,255,0,en,green,Green
+255,0,224,en,magenta,Magenta
+255,181,0,en,orange,Marigold
+20,0,255,en,blue,Blue
+15,0,255,en,blue,Blue
+0,33,255,en,blue,Blue
+255,0,169,en,magenta,Magenta
+0,196,255,en,cyan,Deep sky blue
+22,255,0,en,green,Green
+0,255,162,en,turquoise,Spring green
+169,0,255,en,purple,Violet
+255,0,36,en,red,Red
+255,5,0,en,red,Red
+80,255,0,en,green,Lime green
+255,0,52,en,red,Red
+255,64,0,en,orange,Orange
+0,7,255,en,blue,Blue
+0,255,56,en,green,Green
+255,0,182,en,magenta,Hot pink
+25,255,0,en,green,Green
+42,0,255,en,blue,Blue
+255,136,0,en,orange,Orange
+226,255,0,en,yellow,Neon yellow
+0,255,39,en,green,Green
+255,0,39,en,red,Red
+0,255,59,en,green,Lime green
+0,182,255,en,blue,Blue
+210,255,0,en,lime,Lime green
+255,0,107,en,pink,Hot pink
+0,248,255,en,cyan,Cyan
+255,220,0,en,yellow,Yellow
+255,0,53,en,red,Red
+0,255,140,en,green,Spring Green
+209,255,0,en,lime,Chartreuse
+123,255,0,en,lime,Lime green
+255,0,217,en,magenta,Fuchsia
+0,255,50,en,green,Green
+0,246,255,en,cyan,Cyan
+0,255,8,en,green,Neon green
+0,198,255,en,cyan,Cyan
+87,255,0,en,lime,Lime green
+222,255,0,en,lime,Neon yellow
+255,67,0,en,orange,Orange
+255,0,195,en,magenta,Magenta
+254,0,255,en,magenta,Magenta
+151,0,255,en,purple,Violet
+73,0,255,en,purple,Ultramarine
+72,255,0,en,green,Lime green
+0,255,232,en,cyan,Cyan
+0,255,83,en,green,Lime green
+107,255,0,en,lime green,Chartreuse
+0,255,72,en,green,Lime green
+21,0,255,en,blue,Blue
+10,0,255,en,blue,Blue
+255,0,151,en,magenta,Magenta
+255,0,117,en,pink,Hot Pink
+0,161,255,en,blue,Blue
+0,255,245,en,cyan,Cyan
+0,24,255,en,blue,Blue
+255,6,0,en,red,Red
+255,91,0,en,orange,Orange
+0,138,255,en,blue,Blue
+233,255,0,en,yellow,Yellow
+255,0,205,en,magenta,Magenta
+124,255,0,en,lime,Lime green
+184,0,255,en,purple,Purple
+0,255,161,en,green,Medium Spring Green
+0,255,101,en,green,Green
+255,0,233,en,magenta,Magenta
+153,0,255,en,purple,Purple
+0,255,143,en,green,Spring green
+255,0,161,en,magenta,Pink
+255,99,0,en,orange,Orange
+168,255,0,en,lime,Lime green
+255,225,0,en,yellow,Yellow
+168,0,255,en,purple,Purple
+0,85,255,en,blue,Blue
+255,222,0,en,yellow,Yellow
+8,255,0,en,green,Neon green
+160,0,255,en,purple,Purple
+0,255,18,en,green,Neon green
+0,255,148,en,green,Spring Green
+0,255,59,en,green,Green
+168,255,0,en,lime,Lime green
+255,0,62,en,red,Cerise
+81,255,0,en,green,Lime green
+226,255,0,en,yellow,Neon yellow
+0,255,107,en,green,Bright green
+255,0,146,en,pink,Pink
+0,255,19,en,green,Green
+0,255,176,en,turquoise,Cyan
+255,0,70,en,red,Fuchsia
+190,0,255,en,purple,Purple
+0,104,255,en,blue,Blue
+0,1,255,en,blue,Blue
+255,0,170,en,magenta,Hot pink
+255,198,0,en,yellow,Yellow
+0,255,218,en,cyan,Cyan
+163,0,255,en,purple,Purple
+149,0,255,en,purple,Purple
+0,177,255,en,blue,Blue
+0,246,255,en,cyan,Cyan
+137,0,255,en,purple,Purple
+0,255,138,en,green,Spring Green
+255,207,0,en,yellow,Yellow
+0,110,255,en,blue,Blue
+255,241,0,en,yellow,Yellow
+126,255,0,en,lime green,Lime green
+0,255,28,en,green,Lime green
+255,78,0,en,orange,Orange
+255,0,75,en,pink,Fuchsia
+0,255,53,en,green,Green
+0,134,255,en,blue,Blue
+53,0,255,en,blue,Blue
+0,132,255,en,blue,Dodger Blue
+175,0,255,en,purple,Purple
+143,0,255,en,purple,Purple
+0,255,13,en,green,Green
+114,0,255,en,purple,Purple
+0,255,175,en,turquoise,Turquoise
+198,0,255,en,magenta,Magenta
+255,132,0,en,orange,Orange
+0,100,255,en,blue,Blue
+0,255,85,en,green,Neon green
+255,0,171,en,magenta,Hot pink
+0,255,98,en,green,Spring green
+255,0,83,en,pink,Hot pink
+255,0,108,en,pink,Hot pink
+0,255,212,en,turquoise,Cyan
+0,255,6,en,green,Lime green
+0,255,180,en,turquoise,Cyan
+255,144,0,en,orange,Orange
+0,67,255,en,blue,Blue
+143,0,255,en,purple,Purple
+11,0,255,en,blue,Blue
+152,0,255,en,purple,Violet
+255,0,90,en,pink,Hot pink
+0,255,223,en,turquoise,Cyan
+255,0,52,en,red,Hot red
+255,160,0,en,orange,Orange
+0,10,255,en,blue,Blue
+177,0,255,en,purple,Violet
+26,0,255,en,blue,Blue
+21,0,255,en,blue,Blue
+189,0,255,en,purple,Purple
+111,0,255,en,purple,Blue Violet
+149,0,255,en,purple,Purple
+206,0,255,en,magenta,Magenta
+0,255,169,en,green,Spring Green
+0,255,30,en,green,Green
+123,255,0,en,green,Lime green
+119,0,255,en,purple,Purple
+255,12,0,en,red,Red
+0,255,153,en,green,Spring green
+24,255,0,en,green,Green
+255,0,158,en,magenta,Hot pink
+255,0,12,en,red,Red
+0,255,95,en,green,Lime Green
+255,38,0,en,orange,Scarlet
+0,150,255,en,blue,Blue
+255,0,88,en,pink,Hot pink
+255,108,0,en,orange,Orange
+84,0,255,en,purple,Violet
+1,255,0,en,green,Neon Green
+12,255,0,en,lime,Green
+193,255,0,en,lime,Lime green
+114,255,0,en,lime,Lime green
+183,255,0,en,lime,Lime green
+255,0,159,en,magenta,Fuchsia
+0,255,148,en,green,Spring green
+97,255,0,en,green,Lime green
+255,127,0,en,orange,Orange
+131,0,255,en,purple,Purple
+127,255,0,en,lime,Lime green
+181,0,255,en,purple,Purple
+0,255,141,en,green,Spring green
+255,209,0,en,yellow,Yellow
+0,133,255,en,blue,Blue
+0,255,126,en,green,Spring green
+255,147,0,en,orange,Orange
+142,0,255,en,purple,Purple
+0,255,13,en,green,Green
+0,255,39,en,green,Green
+142,0,255,en,purple,Purple
+0,255,85,en,green,Lime green
+0,255,129,en,green,Spring Green
+255,93,0,en,orange,Orange
+255,0,229,en,magenta,Magenta
+0,83,255,en,blue,Blue
+0,255,120,en,green,Spring green
+81,255,0,en,green,Lime green
+255,0,65,en,red,Hot pink
+127,255,0,en,lime,Lime green
+68,255,0,en,green,Green
+255,37,0,en,orange,Red
+7,255,0,en,green,Lime green
+255,0,55,en,red,Red
+227,0,255,en,magenta,Magenta
+255,222,0,en,yellow,Yellow
+5,0,255,en,blue,Blue
+213,0,255,en,magenta,Magenta
+255,25,0,en,red,Red
+141,255,0,en,lime,Lime green
+245,255,0,en,yellow,Yellow
+255,204,0,en,yellow,Yellow
+73,255,0,en,green,Lime green
+255,0,157,en,pink,Fuchsia
+255,0,63,en,red,Cerise
+255,0,55,en,red,Bright red
+141,0,255,en,purple,Purple
+206,255,0,en,lime,Chartreuse
+179,0,255,en,purple,Purple
+255,0,16,en,red,Red
+255,0,54,en,red,Magenta
+0,255,167,en,green,Turquoise
+111,0,255,en,purple,Violet
+136,255,0,en,lime,Lime green
+255,0,158,en,magenta,Hot pink
+255,195,0,en,yellow,Gold
+255,0,97,en,pink,Hot pink
+0,255,182,en,turquoise,Green
+255,127,0,en,orange,Orange
+3,0,255,en,blue,Blue
+255,167,0,en,orange,Orange
+90,255,0,en,green,Lime green
+255,74,0,en,orange,Red-orange
+193,0,255,en,purple,Purple
+0,255,116,en,green,Neon green
+239,0,255,en,magenta,Magenta
+0,255,56,en,green,Neon green
+2,255,0,en,green,Green
+255,0,215,en,magenta,Magenta
+255,236,0,en,yellow,Yellow
+0,255,78,en,green,Lime green
+105,255,0,en,green,Lime green
+192,255,0,en,lime,Lime green
+0,255,176,en,green,Cyan
+255,153,0,en,orange,Orange
+0,59,255,en,blue,Blue
+238,255,0,en,yellow,Yellow
+0,170,255,en,blue,Azure
+236,255,0,en,yellow,Yellow
+0,255,102,en,green,Lime green
+0,13,255,en,blue,Blue
+255,94,0,en,orange,Orange
+255,0,142,en,pink,Hot pink
+156,0,255,en,purple,Purple
+133,255,0,en,lime,Lime green
+0,255,181,en,turquoise,Spring green
+246,0,255,en,magenta,Magenta
+119,0,255,en,purple,Purple
+0,46,255,en,blue,Blue
+168,255,0,en,lime,Lime green
+255,0,115,en,pink,Hot Pink
+0,255,123,en,green,Spring Green
+255,12,0,en,red,Red
+0,255,62,en,green,Lime green
+0,255,184,en,cyan,Cyan
+255,0,53,en,red,Cerise
+192,255,0,en,lime,Lime green
+0,67,255,en,blue,Blue
+135,0,255,en,purple,Violet
+0,51,255,en,blue,Blue
+0,255,77,en,green,Lime green
+0,193,255,en,light blue,Blue
+0,255,166,en,teal,Aqua
+0,194,255,en,cyan,Sky blue
+65,255,0,en,green,Lime green
+156,255,0,en,lime,Lime Green
+255,249,0,en,yellow,Yellow
+191,255,0,en,chartreuse,Lime green
+18,255,0,en,green,Lime green
+194,0,255,en,magenta,Purple
+255,24,0,en,red,Red
+73,255,0,en,green,Green
+255,176,0,en,orange,Orange
+0,255,171,en,turquoise,Spring Green
+0,255,67,en,green,Lime green
+162,255,0,en,lime,Lime green
