@@ -6,9 +6,13 @@
 import time
 
 def timefmt(s):
-    m = s // 60
+    h = s // 3600
+    m = (s // 60) % 60
     s %= 60
-    return f"{int(m)}m {s:.2f}s" if m > 0 else f"{s:.2f}s"
+    h_str = f"{int(h)}h " if h > 0 else ""
+    m_str = f"{int(m)}m " if m > 0 else ""
+    s_str = f"{s // 0.01 / 100}s" # trick to round down to 2 digits
+    return h_str + m_str + s_str
 
 class ProgressBar:
     def __init__(self, total, prefix = '', suffix = '', decimals = 1, length = 100, fill = '⬤', print_end = "\r"):
@@ -48,4 +52,3 @@ class ProgressBar:
         if i == None: i = self.i+1
         self.i = i
         self.print_bar()
-        
