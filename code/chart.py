@@ -34,10 +34,10 @@ def average_rgb(group):
     return (r, g, b)
 
 
-def build_chart(csv_path: str, bin_width: float = 5.0, output_path: str = None):
+def build_chart(csv_path: str, bin_width: float = 5.0, output_path: str = None, term_col: str = "color_term"):
     # ── Load data ────────────────────────────────────────────────────────────
     df = pd.read_csv(csv_path)
-    required = {"r", "g", "b", "color_term"}
+    required = {"r", "g", "b", term_col}
     if not required.issubset(df.columns):
         raise ValueError(f"CSV must contain columns: {required}")
 
@@ -51,7 +51,7 @@ def build_chart(csv_path: str, bin_width: float = 5.0, output_path: str = None):
 
     # ── Compute per-(bin, term) counts and proportions ────────────────────────
     counts = (
-        df.groupby(["hue_bin", "color_term"], observed=True)
+        df.groupby(["hue_bin", term_col], observed=True)
         .size()
         .reset_index(name="count")
     )
@@ -60,14 +60,14 @@ def build_chart(csv_path: str, bin_width: float = 5.0, output_path: str = None):
 
     # ── Compute average color per color term (across ALL data points) ─────────
     term_colors = (
-        df.groupby("color_term")
+        df.groupby(term_col)
         .apply(average_rgb, include_groups=False)
         .to_dict()
     )
 
     # ── Pivot to wide format for stacking ────────────────────────────────────
     pivot = counts.pivot_table(
-        index="hue_bin", columns="color_term", values="proportion", aggfunc="sum"
+        index="hue_bin", columns=term_col, values="proportion", aggfunc="sum"
     ).fillna(0)
 
     # Sort bins numerically
@@ -161,8 +161,14 @@ def main():
         default=None,
         help="Optional path to save the chart (e.g. chart.png). If omitted, displays interactively.",
     )
+    parser.add_argument(
+        "--term-col",
+        type=str,
+        default=None,
+        help="Name of CSV column containing color terms (default: 'color_term')",
+    )
     args = parser.parse_args()
-    build_chart(args.csv, bin_width=args.bin_width, output_path=args.output)
+    build_chart(args.csv, bin_width=args.bin_width, output_path=args.output, term_col=args.term_col)
 
 
 if __name__ == "__main__":
