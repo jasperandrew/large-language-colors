@@ -1,16 +1,3 @@
-"""
-Stacked hue chart: for each hue bin, shows the proportion of color terms
-assigned to that bin, with each region colored by the average RGB of that term.
-
-Usage:
-    python hue_stacked_chart.py data.csv --bin-width 5
-
-CSV format expected:
-    r,g,b,color_term
-    255,0,0,red
-    ...
-"""
-
 import argparse
 import colorsys
 import pandas as pd
@@ -75,7 +62,6 @@ def build_chart(csv_path: str, bin_width: float = 5.0, output_path: str = None, 
 
     color_terms = pivot.columns.tolist()
     x = pivot.index.values
-    bar_width = bin_width * 0.95  # slight gap between bars
 
     # ── Plot ──────────────────────────────────────────────────────────────────
     fig, ax = plt.subplots(figsize=(max(12, len(x) * 0.12), 6))
@@ -89,7 +75,7 @@ def build_chart(csv_path: str, bin_width: float = 5.0, output_path: str = None, 
         ax.bar(
             x,
             heights,
-            width=bar_width,
+            width=bin_width,
             bottom=bottom,
             color=color,
             align="edge",
@@ -140,7 +126,7 @@ def build_chart(csv_path: str, bin_width: float = 5.0, output_path: str = None, 
     plt.tight_layout()
 
     if output_path:
-        plt.savefig(output_path, dpi=150, bbox_inches="tight", facecolor=fig.get_facecolor())
+        plt.savefig(output_path, dpi=150, bbox_inches="tight", transparent=True)
         print(f"Saved to {output_path}")
     else:
         plt.show()
