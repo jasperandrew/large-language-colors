@@ -1,9 +1,12 @@
 import argparse
 import colorsys
+import os
 import pandas as pd
 import numpy as np
+import matplotlib as mpl
 import matplotlib.pyplot as plt
 import matplotlib.patches as mpatches
+from matplotlib import font_manager
 from matplotlib.colors import to_hex
 
 
@@ -21,7 +24,49 @@ def average_rgb(group):
     return (r, g, b)
 
 
-def build_chart(csv_path: str, bin_width: float = 5.0, output_path: str = None, term_col: str = "color_term"):
+def set_font(font_spec):
+    """
+    Configure matplotlib to use a font.
+    font_spec can be:
+      - None: do nothing
+      - path to a font file: registers that font and uses it
+      - font family name (string): uses that family name
+    """
+    if not font_spec:
+        return
+
+    try:
+        # If it's a file path, register the font and use its internal name
+        if os.path.exists(font_spec):
+            font_manager.fontManager.addfont(font_spec)
+            fp = font_manager.FontProperties(fname=font_spec)
+            name = fp.get_name()
+            mpl.rcParams["font.family"] = "sans-serif"
+            # put the registered name first so it's preferred
+            mpl.rcParams["font.sans-serif"] = [name] + mpl.rcParams.get(
+                "font.sans-serif", []
+            )
+        else:
+            # Treat as a font family name
+            mpl.rcParams["font.family"] = font_spec
+    except Exception as e:
+        print(f"Warning: failed to set font '{font_spec}': {e}")
+
+    # Ensure minus sign renders correctly
+    mpl.rcParams["axes.unicode_minus"] = False
+
+
+def build_chart(
+    csv_path: str,
+    bin_width: float = 5.0,
+    output_path: str = None,
+    term_col: str = "color_term",
+    top_n: int = None,
+    font: str = None,
+):
+    # Configure font early so axis/legend/title use it
+    set_font(font)
+
     # ── Load data ────────────────────────────────────────────────────────────
     df = pd.read_csv(csv_path)
     required = {"r", "g", "b", term_col}
@@ -52,10 +97,25 @@ def build_chart(csv_path: str, bin_width: float = 5.0, output_path: str = None, 
         .to_dict()
     )
 
+    # ── Optionally restrict to top N terms ──────────────────────────────────
+    if top_n is not None and top_n > 0:
+        top_terms = df[term_col].value_counts().nlargest(top_n).index.tolist()
+        # Filter counts to only these terms and recompute proportions among them
+        counts = counts[counts[term_col].isin(top_terms)].copy()
+        totals = counts.groupby("hue_bin", observed=True)["count"].transform("sum")
+        counts["proportion"] = counts["count"] / totals
+        counts["proportion"] = counts["proportion"].fillna(0)
+
+        # Keep only colors for the selected terms
+        term_colors = {k: v for k, v in term_colors.items() if k in top_terms}
+
     # ── Pivot to wide format for stacking ────────────────────────────────────
     pivot = counts.pivot_table(
         index="hue_bin", columns=term_col, values="proportion", aggfunc="sum"
     ).fillna(0)
+
+    # Ensure all bins are present in the index (so x-axis covers full 0..360)
+    pivot = pivot.reindex(bin_labels, fill_value=0)
 
     # Sort bins numerically
     pivot = pivot.sort_index()
@@ -150,11 +210,30 @@ def main():
     parser.add_argument(
         "--term-col",
         type=str,
-        default=None,
+        default="color_term",
         help="Name of CSV column containing color terms (default: 'color_term')",
     )
+    parser.add_argument(
+        "--top-n",
+        type=int,
+        default=None,
+        help="Only include the top N most frequent color terms (by overall count). If omitted, include all terms.",
+    )
+    parser.add_argument(
+        "--font",
+        type=str,
+        default=None,
+        help="Font family name or path to a font file to use for rendering text (e.g. 'SimHei' or '/path/to/NotoSansCJKsc-Regular.otf').",
+    )
     args = parser.parse_args()
-    build_chart(args.csv, bin_width=args.bin_width, output_path=args.output, term_col=args.term_col)
+    build_chart(
+        args.csv,
+        bin_width=args.bin_width,
+        output_path=args.output,
+        term_col=args.term_col,
+        top_n=args.top_n,
+        font=args.font,
+    )
 
 
 if __name__ == "__main__":

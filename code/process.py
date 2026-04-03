@@ -87,6 +87,7 @@ def normalize_term(lang, term):
     if not term: raise ValueError("Null/empty color term")
     term = str(term).strip().lower()
     term = re.sub(r'\s+', ' ', term).strip()
+    term = re.sub(r'[^a-z\-\'\s\(\)\,]', '', term)
     if lang == "en":
         term = re.sub('grey', 'gray', term)
         for canonical,variants in MAPPING_EN.items():
@@ -117,12 +118,12 @@ def main():
         fieldnames = reader.fieldnames or []
         rows = list(reader)
 
-    color_cols = [c for c in ("chatgpt", "gemini") if c in fieldnames]
+    color_cols = fieldnames[4:]
     if not color_cols:
         print("Input must contain 'chatgpt' and/or 'gemini' columns.", file=sys.stderr)
         sys.exit(1)
 
-    fields = list(fieldnames)[:4]
+    fields = list(fieldnames)[:4] # [r,g,b,lang_code]
     for c in color_cols:
         fields += [f"{c}_raw", f"{c}_norm"] #, f"{c}_min"]
 

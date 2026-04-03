@@ -1,4 +1,5 @@
 local.py
+cleaned_color_names-*.csv
 
 ################################
 ####### PYTHON GITIGNORE #######
