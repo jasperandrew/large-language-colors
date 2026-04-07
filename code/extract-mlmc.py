@@ -1,4 +1,3 @@
-#!/usr/bin/env python3
 import csv
 import argparse
 import sys
@@ -27,14 +26,17 @@ def main():
 
         for row in reader:
             if args.rgbset is not None and row['rgbSet'] != args.rgbset: continue
-            if float(row["r"]) < 1: continue
             if row["langAbv"] == "en":
                 clean = re.sub(r'[^a-z\-\'\s]', "", re.sub(r'\s', " ", row["name"].lower().strip())).strip()
                 if not clean: continue
 
-            out_row = {c: row[c].strip() for c in ["r","g","b"]}
+            try:
+                out_row = {c: int(row[c].strip()) for c in ["r","g","b"]}
+            except:
+                continue
+
             out_row["lang_code"] = row["langAbv"]
-            out_row["human"] = row["standardized_entered_name"]
+            out_row["human"] = row["name"]
 
             writer.writerow(out_row)
 

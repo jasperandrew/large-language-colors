@@ -58,7 +58,7 @@ def set_font(font_spec):
 
 def build_chart(
     csv_path: str,
-    bin_width: float = 5.0,
+    n_bins: int = 36,
     output_path: str = None,
     term_col: str = "color_term",
     top_n: int = None,
@@ -76,6 +76,7 @@ def build_chart(
     df["hue"] = df.apply(lambda row: rgb_to_hue(row["r"], row["g"], row["b"]), axis=1)
 
     # ── Bin hues ─────────────────────────────────────────────────────────────
+    bin_width = 360.0 / n_bins
     bins = np.arange(0, 360 + bin_width, bin_width)
     bin_labels = bins[:-1]  # left edge of each bin
     df["hue_bin"] = pd.cut(df["hue"], bins=bins, labels=bin_labels, right=False)
@@ -186,7 +187,7 @@ def build_chart(
     plt.tight_layout()
 
     if output_path:
-        plt.savefig(output_path, dpi=150, bbox_inches="tight", transparent=True)
+        plt.savefig(output_path, dpi=150, bbox_inches="tight")#, transparent=True)
         print(f"Saved to {output_path}")
     else:
         plt.show()
@@ -196,10 +197,10 @@ def main():
     parser = argparse.ArgumentParser(description="Stacked hue chart from RGB+color_term CSV.")
     parser.add_argument("csv", help="Path to CSV file with columns: r, g, b, color_term")
     parser.add_argument(
-        "--bin-width",
+        "--n-bins",
         type=float,
-        default=5.0,
-        help="Width of each hue bin in degrees (default: 5)",
+        default=36,
+        help="Number of bins (default: 36)",
     )
     parser.add_argument(
         "--output",
@@ -228,7 +229,7 @@ def main():
     args = parser.parse_args()
     build_chart(
         args.csv,
-        bin_width=args.bin_width,
+        n_bins=args.n_bins,
         output_path=args.output,
         term_col=args.term_col,
         top_n=args.top_n,

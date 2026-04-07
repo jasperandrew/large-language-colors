@@ -1,4 +1,4 @@
-import tools.local as keys # local.py contains API keys
+import tools.api_keys as keys # api_keys.py contains API keys
 import tools.swatch as swatch
 
 # OPENAI CHATGPT

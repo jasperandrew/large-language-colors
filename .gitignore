@@ -1,5 +1,6 @@
-local.py
+api_keys.py
 cleaned_color_names-*.csv
+test-*.png
 
 ################################
 ####### PYTHON GITIGNORE #######
