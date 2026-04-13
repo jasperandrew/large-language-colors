@@ -21,7 +21,7 @@ def main():
             if col not in reader.fieldnames:
                 sys.exit(f"ERROR: input CSV missing required column: {col}")
 
-        writer = csv.DictWriter(outf, fieldnames=['r','g','b','lang_code','human'])
+        writer = csv.DictWriter(outf, fieldnames=['r','g','b','lang_code','human_min'])
         writer.writeheader()
 
         for row in reader:
@@ -36,7 +36,7 @@ def main():
                 continue
 
             out_row["lang_code"] = row["langAbv"]
-            out_row["human"] = row["name"]
+            out_row["human_min"] = row["name"]
 
             writer.writerow(out_row)
 
