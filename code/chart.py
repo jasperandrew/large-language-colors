@@ -156,28 +156,28 @@ def build_chart(
         handles=patches,
         loc="upper right",
         bbox_to_anchor=(1.18, 1),
-        framealpha=0.15,
+        framealpha=0,#.15,
         facecolor="#333333",
         edgecolor="none",
-        labelcolor="white",
+        labelcolor="black",
         fontsize=8,
         title="Color term",
         title_fontsize=9,
     )
-    legend.get_title().set_color("white")
+    legend.get_title().set_color("black")
 
     # ── Axes styling ──────────────────────────────────────────────────────────
     ax.set_xlim(0, 360)
     ax.set_ylim(0, 1)
-    ax.set_xlabel("Hue (degrees)", color="white", fontsize=11)
-    ax.set_ylabel("Proportion", color="white", fontsize=11)
+    ax.set_xlabel("Hue (degrees)", color="black", fontsize=11)
+    ax.set_ylabel("Proportion", color="black", fontsize=11)
     ax.set_title(
         f"Color term distribution by hue  (bin width = {bin_width}°)",
-        color="white",
+        color="black",
         fontsize=13,
         pad=14,
     )
-    ax.tick_params(colors="white")
+    ax.tick_params(colors="black")
     for spine in ax.spines.values():
         spine.set_edgecolor("#555555")
 
@@ -187,7 +187,7 @@ def build_chart(
     plt.tight_layout()
 
     if output_path:
-        plt.savefig(output_path, dpi=150, bbox_inches="tight")#, transparent=True)
+        plt.savefig(output_path, dpi=150, bbox_inches="tight", transparent=True)
         print(f"Saved to {output_path}")
     else:
         plt.show()
