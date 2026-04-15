@@ -12,16 +12,6 @@ def normalize_term(lang_code, term):
 def minify_term(term):
     return re.sub(r'[\s\-\'\(\)\,]', '', term)
 
-# def reduce_term(lang, norm):
-#     if not norm: raise ValueError("Null/empty color term")
-#     if lang == "en":
-#         norm = normalize_term(lang, re.split(r'[-\s]+', norm)[-1])
-#         return re.split(r'[-\s]+', norm)[-1]
-#     if lang == "zh":
-#         norm = normalize_term(lang, list(norm)[-2] + "色")
-#         return list(norm)[-2] + "色"
-#     return norm
-
 def main():
     if len(sys.argv) != 3:
         print(f"Usage: python {sys.argv[0]} input.csv output.csv", file=sys.stderr)

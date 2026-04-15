@@ -38,11 +38,13 @@ class LangNormalizer():
 
 
 import rules.en as en
+import rules.ko as ko
 import rules.zh as zh
 
 LANG_NORMALIZERS = {
     "en": LangNormalizer(ignore_regex=en.IGNORE_REGEX, replacements=en.REPLACEMENTS),
-    "zh": LangNormalizer(convert_fn=zh.CONVERT_FN, term_end=zh.TERM_END, replacements=zh.REPLACEMENTS),
+    "ko": LangNormalizer(ignore_regex=ko.IGNORE_REGEX, term_end=ko.TERM_END, replacements=ko.REPLACEMENTS),
+    "zh": LangNormalizer(convert_fn=zh.CONVERT_FN, ignore_regex=zh.IGNORE_REGEX, term_end=zh.TERM_END, replacements=zh.REPLACEMENTS),
 }
 
 NO_NORMALIZER = LangNormalizer()

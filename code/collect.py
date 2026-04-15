@@ -44,8 +44,8 @@ out_path = out_dir + (file_name if file_name else f"{lang_code}-{"test-cube" if 
 
 lang_prompts = { # ISO 639
     "en": "You see a solid-colored square. Name its color in English. You may use color names that are as specific or as general as you want. Do not elaborate on or decorate your response, limit it to the name only.",
-    # en: "You see a solid-colored square. Your task is to name its color in English. First, describe the color with a short sentence, ending with a period. Then, give me the hex code of the color. Finally, your response should end with your chosen color name, which may be as specific or as general as you want. I'm trusting you on this, don't let me down."
-    "zh": "看到一个纯色的正方形。用中文说出它的颜色。可以使用任意具体或笼统的颜色名称。不要对回答进行任何修饰或扩展，只需说出颜色名称。"
+    "zh": "看到一个纯色的正方形。用中文说出它的颜色。可以使用任意具体或笼统的颜色名称。不要对回答进行任何修饰或扩展，只需说出颜色名称。",
+    "ko": "단색 정사각형이 보입니다. 그 색의 이름을 한국어로 말하세요. 색 이름은 원하는 만큼 구체적이거나 일반적으로 사용할 수 있습니다. 답변을 꾸미거나 설명하지 말고, 색 이름만 말하세요.",
 }
 
 if lang_code not in lang_prompts.keys(): err_exit(f"Unsupported LANG_CODE: {lang_code}")

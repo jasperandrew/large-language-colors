@@ -1,6 +1,8 @@
 def CONVERT_FN(term):
     return str.join('', map(lambda ch: TRADITIONAL_TO_SIMPLE[ch] if ch in TRADITIONAL_TO_SIMPLE.keys() else ch, list(term)))
 
+IGNORE_REGEX = r"[a-zA-Z]"
+
 TERM_END = "色"
 
 REPLACEMENTS = {
