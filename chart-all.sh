@@ -6,7 +6,7 @@ TOP_N=15
 L_BINS=50
 FONT="Noto Sans CJK JP"
 OUT_FOLDER=chart-output
-VMAX=5
+VMAX=4
 
 N_BINS=$(( $L_BINS*3 ))
 

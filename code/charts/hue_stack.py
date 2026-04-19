@@ -60,7 +60,7 @@ def build_chart(
         raise ValueError(f"CSV is missing required columns: {missing}")
 
     # ── Filter achromatic colors ──────────────────────────────────────────────
-    saturation, value = color_tools.compute_saturation_value(df)
+    saturation, value = color_tools.df_sat_val(df)
     chromatic = (saturation >= min_saturation) & (value >= min_value)
     n_dropped = (~chromatic).sum()
     if n_dropped:
@@ -75,8 +75,8 @@ def build_chart(
         )
 
     # ── Hue & term colors (both vectorized) ───────────────────────────────────
-    df["hue"] = color_tools.compute_hues(df)
-    term_colors = color_tools.compute_term_colors(df, term_col)  # before top-N filter
+    df["hue"] = color_tools.df_hues(df)
+    term_colors = color_tools.df_term_colors(df, term_col)  # before top-N filter
 
     # ── Bin hues ──────────────────────────────────────────────────────────────
     bin_width = 360.0 / n_bins

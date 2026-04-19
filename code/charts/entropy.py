@@ -21,81 +21,8 @@ import pandas as pd
 from matplotlib import font_manager
 from scipy.ndimage import gaussian_filter
 
-
-# ── CJK font support ──────────────────────────────────────────────────────────
-
-_CJK_FONT_CANDIDATES = [
-    "Noto Sans CJK SC", "Noto Sans CJK KR", "Noto Sans CJK TC", "Noto Sans CJK JP",
-    "PingFang SC", "Apple SD Gothic Neo", "Hiragino Sans",
-    "Microsoft YaHei", "Malgun Gothic", "MS Gothic",
-    "WenQuanYi Micro Hei", "WenQuanYi Zen Hei", "UnDotum", "NanumGothic",
-    "SimHei", "SimSun", "NSimSun",
-]
-_CJK_KEYWORDS = ("cjk", "noto", "gothic", "hei", "yuan", "ming", "dotum",
-                  "gulim", "batang", "nanum", "malgun", "pingfang", "hiragino")
-
-
-@lru_cache(maxsize=1)
-def _find_cjk_font() -> Optional[str]:
-    available = {f.name for f in font_manager.fontManager.ttflist}
-    for c in _CJK_FONT_CANDIDATES:
-        if c in available:
-            return c
-    for f in font_manager.fontManager.ttflist:
-        if any(kw in f.name.lower() for kw in _CJK_KEYWORDS):
-            return f.name
-    return None
-
-
-def configure_font(font_spec: Optional[str]) -> None:
-    if font_spec is None:
-        font_spec = _find_cjk_font()
-        if font_spec is None:
-            return
-    try:
-        if os.path.exists(font_spec):
-            font_manager.fontManager.addfont(font_spec)
-            font_spec = font_manager.FontProperties(fname=font_spec).get_name()
-        mpl.rcParams["font.family"] = "sans-serif"
-        mpl.rcParams["font.sans-serif"] = [font_spec] + list(mpl.rcParams.get("font.sans-serif", []))
-        mpl.rcParams["axes.unicode_minus"] = False
-    except Exception as exc:
-        print(f"Warning: could not set font '{font_spec}': {exc}")
-
-
-# ── Color space conversions ───────────────────────────────────────────────────
-
-def rgb_to_lab(r, g, b):
-    """Vectorized sRGB (0–255) → CIELAB (D65)."""
-    rgb = np.stack([r, g, b], axis=1) / 255.0
-    mask = rgb > 0.04045
-    rgb[mask] = ((rgb[mask] + 0.055) / 1.055) ** 2.4
-    rgb[~mask] /= 12.92
-    M = np.array([
-        [0.4124564, 0.3575761, 0.1804375],
-        [0.2126729, 0.7151522, 0.0721750],
-        [0.0193339, 0.1191920, 0.9503041],
-    ])
-    xyz = rgb @ M.T
-    xyz /= np.array([0.95047, 1.00000, 1.08883])
-    eps, kap = 0.008856, 903.3
-    fx = np.where(xyz > eps, xyz ** (1 / 3), (kap * xyz + 16) / 116)
-    L  = 116 * fx[:, 1] - 16
-    a  = 500 * (fx[:, 0] - fx[:, 1])
-    b_ = 200 * (fx[:, 1] - fx[:, 2])
-    return L, a, b_
-
-
-def rgb_to_hsv_sat_val(r, g, b):
-    """Return HSV saturation and value arrays from RGB (0–255)."""
-    r, g, b = r / 255.0, g / 255.0, b / 255.0
-    cmax = np.maximum.reduce([r, g, b])
-    cmin = np.minimum.reduce([r, g, b])
-    delta = cmax - cmin
-    sat = np.zeros(len(r))
-    nonzero = cmax > 0
-    sat[nonzero] = delta[nonzero] / cmax[nonzero]
-    return sat, cmax  # cmax == value
+import tools.font as font_tools
+import tools.color as color_tools
 
 
 # ── Binning ───────────────────────────────────────────────────────────────────
@@ -149,8 +76,8 @@ def build_chart(
     font: Optional[str] = None,
     sigma: float = 1.5,
     bg: str = "white",
-    min_saturation: float = 0.0,
-    min_value: float = 0.0,
+    min_saturation: float = 0.01,
+    min_value: float = 0.01,
     cmap: str = "magma",
     vmax: Optional[float] = None,
 ) -> None:
@@ -180,7 +107,7 @@ def build_chart(
     if missing:
         raise ValueError(f"CSV is missing required columns: {missing}")
 
-    configure_font(font)
+    font_tools.configure_font(font)
 
     r = df["r"].to_numpy(dtype=float)
     g = df["g"].to_numpy(dtype=float)
@@ -188,7 +115,7 @@ def build_chart(
 
     # ── Optional achromatic filter ────────────────────────────────────────────
     if min_saturation > 0 or min_value > 0:
-        sat, val = rgb_to_hsv_sat_val(r.copy(), g.copy(), b.copy())
+        sat, val = color_tools.rgb_to_sat_val(r.copy(), g.copy(), b.copy())
         mask = (sat >= min_saturation) & (val >= min_value)
         print(f"Filtered {(~mask).sum()} achromatic rows")
         df = df[mask].reset_index(drop=True)
@@ -197,7 +124,7 @@ def build_chart(
     terms = df[term_col].to_numpy()
 
     # ── CIELAB conversion ─────────────────────────────────────────────────────
-    L, a_ch, b_ch = rgb_to_lab(r.copy(), g.copy(), b.copy())
+    L, a_ch, b_ch = color_tools.rgb_to_lab(r.copy(), g.copy(), b.copy())
     hue = np.rad2deg(np.arctan2(b_ch, a_ch)) % 360
 
     # ── Bin & compute entropy ─────────────────────────────────────────────────
