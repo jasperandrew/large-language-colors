@@ -164,7 +164,6 @@ def build_chart(
     csv_path: str,
     n_bins: int = 36,
     output_path: Optional[str] = None,
-    text_color: str = "black",
     term_col: str = "color_term",
     top_n: Optional[int] = None,
     font: Optional[str] = None,
@@ -181,7 +180,6 @@ def build_chart(
     csv_path        : Path to CSV with columns: r, g, b, <term_col>
     n_bins          : Number of hue bins for initial aggregation
     output_path     : Save path; if None, displays interactively
-    text_color      : Color for legend, axis, and label text
     term_col        : Name of the color-term column in the CSV
     top_n           : Restrict to the N most frequent terms (None = all)
     font            : Font family name or file path; None = auto-detect CJK
@@ -291,8 +289,8 @@ def build_chart(
 
     # ── Plot ──────────────────────────────────────────────────────────────────
     fig, ax = plt.subplots(figsize=(14, 6))
-    fig.patch.set_facecolor("#1a1a1a")
-    ax.set_facecolor("#1a1a1a")
+    fig.patch.set_facecolor("white")
+    ax.set_facecolor("white")
 
     bottom = np.zeros(n_dense)
     for i, term in enumerate(color_terms):
@@ -312,25 +310,26 @@ def build_chart(
         bbox_to_anchor=(1.02, 1),
         framealpha=0,
         edgecolor="none",
-        labelcolor=text_color,
+        labelcolor="black",
         fontsize=8,
         title="Color term",
         title_fontsize=9,
     )
-    legend.get_title().set_color(text_color)
+    legend.get_title().set_color("black")
 
     # ── Axes styling ──────────────────────────────────────────────────────────
     ax.set_xlim(0, 360)
     ax.set_ylim(0, 1)
-    ax.set_xlabel("Hue (degrees)", color=text_color, fontsize=11)
-    ax.set_ylabel("Proportion", color=text_color, fontsize=11)
+    ax.set_xlabel("Hue (degrees)", color="black", fontsize=11)
+    ax.set_ylabel("Proportion", color="black", fontsize=11)
+    top_n_str = ("all" if top_n == None else f"top {top_n}")
     ax.set_title(
-        f"Color term distribution by hue  (top {top_n} terms, {n_bins} bins)",
-        color=text_color,
+        f"Color term distribution by hue  ({top_n_str} terms, {n_bins} bins)",
+        color="black",
         fontsize=13,
         pad=14,
     )
-    ax.tick_params(colors=text_color)
+    ax.tick_params(colors="black")
     for spine in ax.spines.values():
         spine.set_edgecolor("#555555")
     ax.set_xticks(np.arange(0, 361, 30))
@@ -338,7 +337,7 @@ def build_chart(
     plt.tight_layout()
 
     if output_path:
-        plt.savefig(output_path, dpi=150, bbox_inches="tight", transparent=True)
+        plt.savefig(output_path, dpi=150, bbox_inches="tight") #, transparent=True)
         print(f"Saved to {output_path}")
     else:
         plt.show()
@@ -356,8 +355,6 @@ def main() -> None:
                         help="Number of hue bins for initial aggregation")
     parser.add_argument("--output", type=str, default=None,
                         help="Output image path (omit to display interactively)")
-    parser.add_argument("--text-color", type=str, default="black",
-                        help="Color for legend, axis, and label text")
     parser.add_argument("--term-col", type=str, default="color_term",
                         help="CSV column containing color terms")
     parser.add_argument("--top-n", type=int, default=None,
@@ -378,7 +375,6 @@ def main() -> None:
         csv_path=args.csv,
         n_bins=args.n_bins,
         output_path=args.output,
-        text_color=args.text_color,
         term_col=args.term_col,
         top_n=args.top_n,
         font=args.font,
