@@ -2,6 +2,7 @@ import csv
 import argparse
 import sys
 import re
+import unicodedata
 
 def main():
     p = argparse.ArgumentParser(description="Extract columns [lang,name,r,g,b] and optionally filter by lang and rgbSet.")
@@ -21,7 +22,7 @@ def main():
             if col not in reader.fieldnames:
                 sys.exit(f"ERROR: input CSV missing required column: {col}")
 
-        writer = csv.DictWriter(outf, fieldnames=['r','g','b','lang_code','human_min'])
+        writer = csv.DictWriter(outf, fieldnames=['r','g','b','lang_code','human_raw','human_norm','human_min'])
         writer.writeheader()
 
         for row in reader:
@@ -36,7 +37,9 @@ def main():
                 continue
 
             out_row["lang_code"] = row["langAbv"]
-            out_row["human_min"] = row["name"]
+            out_row["human_raw"] = unicodedata.normalize("NFC", row["entered_name"])
+            out_row["human_norm"] = unicodedata.normalize("NFC", row["standardized_entered_name"])
+            out_row["human_min"] = unicodedata.normalize("NFC", row["name"])
 
             writer.writerow(out_row)
 

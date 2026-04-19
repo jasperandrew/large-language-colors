@@ -1,6 +1,6 @@
 IGNORE_REGEX = r"[a-zA-Z]"
 
-TERM_END = "색"
+TERM_END = "색"
 
 REPLACEMENTS = {
     "파랑": [r"파란"],

@@ -1,11 +1,13 @@
 import sys
 import csv
 import re
+import unicodedata
 from collections import defaultdict, Counter
 from lang_norm import get_normalizer
 
 def normalize_term(lang_code, term):
     if not term: raise ValueError("Null/empty color term")
+    term = unicodedata.normalize("NFC", term)
     term = re.sub(r'\s+', ' ', term.lower()).strip()
     return get_normalizer(lang_code).process(term)
 
