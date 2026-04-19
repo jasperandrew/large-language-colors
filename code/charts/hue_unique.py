@@ -10,101 +10,16 @@ Usage:
 
 import argparse
 import os
-from functools import lru_cache
 from typing import Optional
 
 import matplotlib as mpl
 import matplotlib.pyplot as plt
 import numpy as np
 import pandas as pd
-from matplotlib import font_manager
 from scipy.ndimage import gaussian_filter1d
 
-
-# ── CJK font support (shared logic) ──────────────────────────────────────────
-
-_CJK_FONT_CANDIDATES = [
-    "Noto Sans CJK SC", "Noto Sans CJK KR", "Noto Sans CJK TC", "Noto Sans CJK JP",
-    "PingFang SC", "Apple SD Gothic Neo", "Hiragino Sans",
-    "Microsoft YaHei", "Malgun Gothic", "MS Gothic",
-    "WenQuanYi Micro Hei", "WenQuanYi Zen Hei", "UnDotum", "NanumGothic",
-    "SimHei", "SimSun", "NSimSun",
-]
-
-_CJK_KEYWORDS = ("cjk", "noto", "gothic", "hei", "yuan", "ming", "dotum",
-                  "gulim", "batang", "nanum", "malgun", "pingfang", "hiragino")
-
-
-@lru_cache(maxsize=1)
-def _find_cjk_font() -> Optional[str]:
-    available = {f.name for f in font_manager.fontManager.ttflist}
-    for candidate in _CJK_FONT_CANDIDATES:
-        if candidate in available:
-            return candidate
-    for font in font_manager.fontManager.ttflist:
-        if any(kw in font.name.lower() for kw in _CJK_KEYWORDS):
-            return font.name
-    return None
-
-
-def configure_font(font_spec: Optional[str]) -> None:
-    if font_spec is None:
-        font_spec = _find_cjk_font()
-        if font_spec is None:
-            return
-    try:
-        if os.path.exists(font_spec):
-            font_manager.fontManager.addfont(font_spec)
-            fp = font_manager.FontProperties(fname=font_spec)
-            font_spec = fp.get_name()
-        mpl.rcParams["font.family"] = "sans-serif"
-        mpl.rcParams["font.sans-serif"] = [font_spec] + list(
-            mpl.rcParams.get("font.sans-serif", [])
-        )
-        mpl.rcParams["axes.unicode_minus"] = False
-    except Exception as exc:
-        print(f"Warning: could not set font '{font_spec}': {exc}")
-
-
-# ── Color helpers ─────────────────────────────────────────────────────────────
-
-def compute_hues(df: pd.DataFrame) -> np.ndarray:
-    """
-    Vectorized HSV hue for a DataFrame with r, g, b columns (0–255).
-    Returns an array of hues in degrees [0, 360).
-    """
-    r = df["r"].to_numpy(dtype=float) / 255
-    g = df["g"].to_numpy(dtype=float) / 255
-    b = df["b"].to_numpy(dtype=float) / 255
-
-    cmax = np.maximum.reduce([r, g, b])
-    cmin = np.minimum.reduce([r, g, b])
-    delta = cmax - cmin
-
-    hue = np.zeros(len(r))
-
-    mask = (cmax == r) & (delta > 0)
-    hue[mask] = (60 * ((g[mask] - b[mask]) / delta[mask])) % 360
-
-    mask = (cmax == g) & (delta > 0)
-    hue[mask] = 60 * ((b[mask] - r[mask]) / delta[mask] + 2)
-
-    mask = (cmax == b) & (delta > 0)
-    hue[mask] = 60 * ((r[mask] - g[mask]) / delta[mask] + 4)
-
-    return hue
-
-
-def compute_saturation_value(df: pd.DataFrame):
-    """Return (saturation, value) arrays for HSV, vectorized, from 0–255 RGB."""
-    r = df["r"].to_numpy(dtype=float) / 255
-    g = df["g"].to_numpy(dtype=float) / 255
-    b = df["b"].to_numpy(dtype=float) / 255
-    cmax = np.maximum.reduce([r, g, b])
-    cmin = np.minimum.reduce([r, g, b])
-    delta = cmax - cmin
-    saturation = np.where(cmax > 0, delta / cmax, 0.0)
-    return saturation, cmax  # cmax == HSV value
+import tools.font as font_tools
+import tools.color as color_tools
 
 
 # ── Chart builder ─────────────────────────────────────────────────────────────
@@ -126,7 +41,7 @@ def build_chart(
         raise ValueError(f"CSV is missing required columns: {missing}")
 
     # ── Filter achromatic colors ──────────────────────────────────────────────
-    saturation, value = compute_saturation_value(df)
+    saturation, value = color_tools.compute_saturation_value(df)
     chromatic = (saturation >= min_saturation) & (value >= min_value)
     n_dropped = (~chromatic).sum()
     if n_dropped:
@@ -141,7 +56,7 @@ def build_chart(
         )
 
     # ── Hue computation ───────────────────────────────────────────────────────
-    df["hue"] = compute_hues(df)
+    df["hue"] = color_tools.compute_hues(df)
 
     # ── Bin hues ──────────────────────────────────────────────────────────────
     bin_width = 360.0 / n_bins
@@ -170,7 +85,7 @@ def build_chart(
     y_smooth = np.clip(y_smooth, 0, None)
 
     # ── Font ──────────────────────────────────────────────────────────────────
-    configure_font(font)
+    font_tools.configure_font(font)
 
     # ── Plot ──────────────────────────────────────────────────────────────────
     fig, ax = plt.subplots(figsize=(14, 5))

@@ -1,5 +1,6 @@
 import os
 import matplotlib as mpl
+from functools import lru_cache
 from matplotlib import font_manager
 
 def needs_cjk(texts: list[str]) -> bool:
