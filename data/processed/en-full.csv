@@ -1,4 +1,4 @@
-r,g,b,lang_code,chatgpt_raw,chatgpt_norm,chatgpt_min,gemini_raw,gemini_norm,gemini_min
+r,g,b,lang_code,gpt_raw,gpt_norm,gpt_min,gemini_raw,gemini_norm,gemini_min
 206,211,109,en,yellow-green,yellow-green,yellowgreen,Pistachio,pistachio,pistachio
 5,0,247,en,blue,blue,blue,Blue,blue,blue
 147,75,179,en,purple,purple,purple,Purple,purple,purple

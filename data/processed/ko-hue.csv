@@ -1,4 +1,4 @@
-r,g,b,lang_code,chatgpt_raw,chatgpt_norm,chatgpt_min,gemini_raw,gemini_norm,gemini_min
+r,g,b,lang_code,gpt_raw,gpt_norm,gpt_min,gemini_raw,gemini_norm,gemini_min
 255,0,5,ko,빨강,빨강,빨강,빨간색,빨강,빨강
 255,0,79,ko,분홍색,분홍,분홍,자홍색,자홍,자홍
 185,255,0,ko,연두색,연두,연두,연두색,연두,연두

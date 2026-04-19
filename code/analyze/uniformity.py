@@ -41,18 +41,11 @@ def circular_stats_deg(angles_deg):
     return mean_angle_deg, R, circ_var, circ_std_deg
 
 
-def main():
-    p = argparse.ArgumentParser(description="Check uniformity of RGB data; optional hue (circular) analysis.")
-    p.add_argument("csv", help="CSV with r,g,b as first 3 columns (first row assumed header)")
-    p.add_argument("--hue", action="store_true", help="Convert RGB -> hue and run circular stats & hue histograms")
-    p.add_argument("--bins", type=int, default=36, help="Number of bins for histograms (default: 36)")
-    p.add_argument("--no-show", action="store_true", help="Do not call plt.show()")
-    args = p.parse_args()
-
-    rgb_data = read_rgb(args.csv)
+def uniformity_stats(csv, hue, bins, no_show):
+    rgb_data = read_rgb(csv)
     n = rgb_data.shape[0]
 
-    if args.hue:
+    if hue:
         hues = []
         for r, g, b in rgb_data:
             h, _, _ = colorsys.rgb_to_hsv(r / 255.0, g / 255.0, b / 255.0)
@@ -66,15 +59,14 @@ def main():
         print(f"  circular variance = {circ_var:.4f}")
         print(f"  circular std (approx) = {circ_std_deg:.2f}°")
 
-        nbins = args.bins
-        counts, bin_edges = np.histogram(hues, bins=nbins, range=(0.0, 360.0))
-        expected = np.full_like(counts, fill_value=n / nbins, dtype=float)
+        counts, bin_edges = np.histogram(hues, bins=bins, range=(0.0, 360.0))
+        expected = np.full_like(counts, fill_value=n / bins, dtype=float)
         stat, pval = chisquare(counts, f_exp=expected)
-        print(f"Hue uniformity chi2 test (bins={nbins}): chi2={stat:.2f}, p={pval:.4f} (high p -> consistent with uniform)")
+        print(f"Hue uniformity chi2 test (bins={bins}): chi2={stat:.2f}, p={pval:.4f} (high p -> consistent with uniform)")
 
         fig = plt.figure(figsize=(10, 4))
         ax1 = fig.add_subplot(1, 2, 1)
-        ax1.hist(hues, bins=nbins, range=(0, 360), color="purple", alpha=0.7)
+        ax1.hist(hues, bins=bins, range=(0, 360), color="purple", alpha=0.7)
         ax1.set_xlim(0, 360)
         ax1.set_xlabel("Hue (degrees)")
         ax1.set_ylabel("Count")
@@ -117,8 +109,19 @@ def main():
             ax.set_title(f"{a} vs {b}")
 
     plt.tight_layout()
-    if not args.no_show:
+    if not no_show:
         plt.show()
+
+
+def main():
+    p = argparse.ArgumentParser(description="Check uniformity of RGB data; optional hue (circular) analysis.")
+    p.add_argument("csv", help="CSV with r,g,b as first 3 columns (first row assumed header)")
+    p.add_argument("--hue", action="store_true", help="Convert RGB -> hue and run circular stats & hue histograms")
+    p.add_argument("--bins", type=int, default=36, help="Number of bins for histograms (default: 36)")
+    p.add_argument("--no-show", action="store_true", help="Do not call plt.show()")
+    args = p.parse_args()
+    
+    uniformity_stats(args.csv, args.hue, args.bins, args.no_show)
 
 
 if __name__ == "__main__":

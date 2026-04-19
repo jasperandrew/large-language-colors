@@ -1,4 +1,4 @@
-r,g,b,lang_code,chatgpt_raw,chatgpt_norm,chatgpt_min,gemini_raw,gemini_norm,gemini_min
+r,g,b,lang_code,gpt_raw,gpt_norm,gpt_min,gemini_raw,gemini_norm,gemini_min
 0,91,255,zh,蓝色,蓝,蓝,蓝色,蓝,蓝
 44,0,255,zh,蓝色,蓝,蓝,蓝色,蓝,蓝
 105,0,255,zh,紫色,紫,紫,紫色,紫,紫

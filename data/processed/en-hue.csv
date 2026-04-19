@@ -1,4 +1,4 @@
-r,g,b,lang_code,chatgpt_raw,chatgpt_norm,chatgpt_min,gemini_raw,gemini_norm,gemini_min
+r,g,b,lang_code,gpt_raw,gpt_norm,gpt_min,gemini_raw,gemini_norm,gemini_min
 205,0,255,en,purple,purple,purple,Magenta,magenta,magenta
 0,255,110,en,green,green,green,Lime green,lime green,limegreen
 0,255,163,en,green,green,green,Turquoise,turquoise,turquoise

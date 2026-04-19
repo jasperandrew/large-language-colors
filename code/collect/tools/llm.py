@@ -1,26 +1,26 @@
 import tools.api_keys as keys # api_keys.py contains API keys
 import tools.swatch as swatch
 
-# OPENAI CHATGPT
+# OPENAI GPT
 
 import openai
 
-CHATGPT_MODEL = "gpt-5.4-mini-2026-03-17"
-CHATGPT = openai.OpenAI(api_key=keys.OPENAI_API_KEY)
+GPT_MODEL = "gpt-5.4-mini-2026-03-17"
+GPT = openai.OpenAI(api_key=keys.OPENAI_API_KEY)
 
-def query_chatgpt(img, prompt):
+def query_gpt(img, prompt):
     input = [{
         "role": "user",
         "content": [
-            {"type": "input_image", "image_url": swatch.to_b64(img)}, # for chatgpt, pass the image as a b64 uri
+            {"type": "input_image", "image_url": swatch.to_b64(img)}, # for gpt, pass the image as a b64 uri
             {"type": "input_text", "text": prompt},
         ],
     }]
-    resp = CHATGPT.responses.create(model=CHATGPT_MODEL, input=input)
+    resp = GPT.responses.create(model=GPT_MODEL, input=input)
     for r in resp.output:
         if r.type == "message": return r.content[0].text
 
-    raise ValueError('ChatGPT Error: No response message found.')
+    raise ValueError('GPT Error: No response message found.')
 
 
 # GOOGLE GEMINI
@@ -38,11 +38,11 @@ def query_gemini(img, prompt):
 
 # GENERAL FUNCTIONALITY
 
-MODELS = ["chatgpt", "gemini"]
+MODELS = ["gpt", "gemini"]
 
 def query(model, img, prompt):
-    if model == "chatgpt":
-        return query_chatgpt(img, prompt)
+    if model == "gpt":
+        return query_gpt(img, prompt)
     if model == "gemini":
         return query_gemini(img, prompt)
     

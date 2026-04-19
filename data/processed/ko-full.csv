@@ -1,4 +1,4 @@
-r,g,b,lang_code,chatgpt_raw,chatgpt_norm,chatgpt_min,gemini_raw,gemini_norm,gemini_min
+r,g,b,lang_code,gpt_raw,gpt_norm,gpt_min,gemini_raw,gemini_norm,gemini_min
 34,101,29,ko,초록색,초록,초록,진녹색,진녹,진녹
 36,115,212,ko,파랑,파랑,파랑,파란색,파랑,파랑
 212,81,59,ko,주황색,주황,주황,다홍색,다홍,다홍

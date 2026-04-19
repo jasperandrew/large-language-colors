@@ -5,7 +5,7 @@ from pathlib import Path
 from scipy.spatial.distance import jensenshannon
 from scipy.stats import spearmanr
 
-# --- CLI args ---
+# CLI args 
 if len(sys.argv) != 3:
     print("Usage: python analyze.py <llm_csv> <mlmc_csv>")
     sys.exit(1)
@@ -13,17 +13,17 @@ if len(sys.argv) != 3:
 llm_path  = Path(sys.argv[1])
 mlmc_path = Path(sys.argv[2])
 
-# --- Load ---
+# Load 
 llm_df  = pd.read_csv(llm_path)
 mlmc_df = pd.read_csv(mlmc_path)
 
 sources = {
-    "chatgpt": llm_df["chatgpt_min"].dropna().value_counts(),
+    "gpt": llm_df["gpt_min"].dropna().value_counts(),
     "gemini":  llm_df["gemini_min"].dropna().value_counts(),
     "human":   mlmc_df["human_min"].dropna().value_counts(),
 }
 
-# --- Align ---
+# Align 
 def align_distributions(dists):
     df = pd.DataFrame(dists).fillna(0)
     return df / df.sum()
@@ -34,7 +34,7 @@ raw_counts = {
     for s in sources
 }
 
-# --- Metrics ---
+# Metrics 
 def jsd(p, q):
     return jensenshannon(p, q, base=2) ** 2
 
@@ -61,7 +61,7 @@ def bootstrap_metrics(counts1, counts2, n_boot=1000, ci=95, seed=42):
         "Spearman_CI": (np.percentile(rho_boot, lo), np.percentile(rho_boot, hi)),
     }
 
-# --- Compare all pairs ---
+# Compare all pairs 
 source_names = list(aligned.columns)
 results = []
 for i, s1 in enumerate(source_names):
@@ -83,7 +83,7 @@ for i, s1 in enumerate(source_names):
             "Spearman_CI":   tuple(round(x, 4) for x in cis["Spearman_CI"]),
         })
 
-# --- Output ---
+# Output 
 lang = llm_df["lang_code"].iloc[0] if "lang_code" in llm_df.columns else llm_path.stem
 print(f"\n=== Language: {lang} ===\n")
 
