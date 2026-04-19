@@ -154,7 +154,7 @@ def main() -> None:
     parser.add_argument("--output", type=str, default=None)
     parser.add_argument("--term-col", type=str, default="color_term")
     parser.add_argument("--font", type=str, default=None)
-    parser.add_argument("--sigma", type=float, default=3.0)
+    parser.add_argument("--sigma", type=float, default=1.0)
     parser.add_argument("--min-saturation", type=float, default=0.1)
     parser.add_argument("--min-value", type=float, default=0.1)
     args = parser.parse_args()

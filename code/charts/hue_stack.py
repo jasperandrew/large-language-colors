@@ -123,7 +123,6 @@ def build_chart(
         return np.rad2deg(np.arctan2(np.sin(rad).mean(), np.cos(rad).mean())) % 360
  
     color_terms = sorted(pivot.columns.tolist(), key=mean_hue)
-    print(color_terms)
     pivot = pivot[color_terms]
 
     # ── Font configuration ────────────────────────────────────────────────────
@@ -199,6 +198,7 @@ def build_chart(
 
     plt.tight_layout()
 
+    print(f"Legend labels: {",".join(color_terms)}")
     if output_path:
         plt.savefig(output_path, dpi=150, bbox_inches="tight") #, transparent=True)
         print(f"Saved to {output_path}")

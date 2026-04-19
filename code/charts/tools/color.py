@@ -36,8 +36,10 @@ def compute_saturation_value(df: pd.DataFrame):
     cmax = np.maximum.reduce([r, g, b])
     cmin = np.minimum.reduce([r, g, b])
     delta = cmax - cmin
-    saturation = np.where(cmax > 0, delta / cmax, 0.0)
-    return saturation, cmax  # cmax == HSV value
+    sat = np.zeros(len(r))
+    nonzero = cmax > 0
+    sat[nonzero] = delta[nonzero] / cmax[nonzero]
+    return sat, cmax  # cmax == HSV value
 
 
 def compute_term_colors(df: pd.DataFrame, term_col: str) -> dict[str, tuple]:
