@@ -188,6 +188,14 @@ def build_chart(
     ax.set_xticks(np.arange(0, 361, 30))
 
     plt.tight_layout()
+    target_ax_width = 12
+    target_ax_height = 3
+
+    ax_pos = ax.get_position()
+    fig.set_size_inches(
+        target_ax_width / ax_pos.width,
+        target_ax_height / ax_pos.height,
+    )
 
     print(f"Legend labels: {",".join(color_terms)}")
     if output_path:
