@@ -76,7 +76,7 @@ def build_chart(
     fg = "black"
     tools.font.configure_font(font)
 
-    fig, ax = plt.subplots(figsize=(12, 4))
+    fig, ax = plt.subplots(figsize=(9, 1))
     fig.patch.set_facecolor(bg)
     ax.set_facecolor(bg)
 
@@ -91,18 +91,18 @@ def build_chart(
     ax.add_collection(lc)
 
     # Filled area beneath the line, in a neutral color
-    ax.fill_between(x_dense, 0, y_smooth, color=fg, alpha=0.07, linewidth=0)
+    # ax.fill_between(x_dense, 0, y_smooth, color=fg, alpha=0.07, linewidth=0)
 
     # Raw bin values as faint dots for reference
-    ax.scatter(
-        unique_per_bin.index.values,
-        unique_per_bin.values,
-        s=18,
-        color=fg,
-        alpha=0.25,
-        zorder=2,
-        linewidths=0,
-    )
+    # ax.scatter(
+    #     unique_per_bin.index.values,
+    #     unique_per_bin.values,
+    #     s=18,
+    #     color=fg,
+    #     alpha=0.25,
+    #     zorder=2,
+    #     linewidths=0,
+    # )
 
     # Axes styling 
     ax.set_xlim(0, 360)

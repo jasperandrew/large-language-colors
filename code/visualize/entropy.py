@@ -108,8 +108,10 @@ def build_chart(
     L, a, b = tools.color.vec_rgb_to_lab(df)
     hue = np.rad2deg(np.arctan2(b, a)) % 360
 
+    n_bins = l_bins*5
+
     # Bin & compute entropy 
-    hue_edges = np.linspace(0, 360, l_bins*3 + 1)
+    hue_edges = np.linspace(0, 360, n_bins + 1)
     L_edges   = np.linspace(0, 100, l_bins + 1)
 
     entropy, count = bin2d_entropy(hue, L, terms, hue_edges, L_edges)
@@ -131,7 +133,7 @@ def build_chart(
     fg = "black"
     tools.font.configure_font(font)
 
-    fig, ax = plt.subplots(figsize=(12, 4))
+    fig, ax = plt.subplots(figsize=(15, 3))
     fig.patch.set_facecolor(bg)
     ax.set_facecolor(bg)
 
@@ -156,7 +158,7 @@ def build_chart(
     lang_str = "" if data_lang == None else data_lang.upper() + ", "
     src_str = "" if data_src == None else data_src + ", "
     ax.set_title(
-        f"Color term entropy - CIELAB L* × Hue  ({lang_str}{src_str}{l_bins}×{l_bins*3} bins)",
+        f"Color term entropy - CIELAB L* × Hue  ({lang_str}{src_str}{l_bins}×{n_bins} bins)",
         color=fg, fontsize=13, pad=12,
     )
     ax.set_xlim(0, 360)

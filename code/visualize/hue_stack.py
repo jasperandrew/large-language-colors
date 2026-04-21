@@ -139,7 +139,7 @@ def build_chart(
     fg = "black"
     tools.font.configure_font(font, labels=color_terms)
 
-    fig, ax = plt.subplots(figsize=(12, 4))
+    fig, ax = plt.subplots() # plot size configured later
     fig.patch.set_facecolor(bg)
     ax.set_facecolor(bg)
 
@@ -189,7 +189,7 @@ def build_chart(
 
     plt.tight_layout()
     target_ax_width = 12
-    target_ax_height = 3
+    target_ax_height = 2
 
     ax_pos = ax.get_position()
     fig.set_size_inches(
