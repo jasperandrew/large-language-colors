@@ -139,7 +139,10 @@ def build_chart(
     fg = "black"
     tools.font.configure_font(font, labels=color_terms)
 
-    fig, ax = plt.subplots() # plot size configured later
+    fig, (ax, ax_hue) = plt.subplots(
+        2, 1,
+        gridspec_kw={"height_ratios": [20, 1], "hspace": 0.04}
+    )
     fig.patch.set_facecolor(bg)
     ax.set_facecolor(bg)
 
@@ -148,6 +151,10 @@ def build_chart(
         color = term_colors.get(term, (0.5, 0.5, 0.5))
         top = bottom + dense_data[:, i]
         ax.fill_between(x_dense, bottom, top, color=color, linewidth=0)
+        boundary = np.zeros(n_dense)
+        for i, term in enumerate(color_terms):
+            boundary += dense_data[:, i]
+            ax.plot(x_dense, boundary, color="black", linewidth=0.3, zorder=3)
         bottom = top
 
     # Legend 
@@ -171,7 +178,7 @@ def build_chart(
     # Axes styling 
     ax.set_xlim(0, 360)
     ax.set_ylim(0, 1)
-    ax.set_xlabel("Hue (degrees)", color=fg, fontsize=11)
+    ax.set_xlabel("")
     ax.set_ylabel("Proportion", color=fg, fontsize=11)
     lang_str = "" if data_lang == None else data_lang.upper() + ", "
     src_str = "" if data_src == None else data_src + ", "
@@ -182,10 +189,12 @@ def build_chart(
         fontsize=13,
         pad=14,
     )
-    ax.tick_params(colors=fg)
-    for spine in ax.spines.values():
-        spine.set_edgecolor("#aaaaaa")
-    ax.set_xticks(np.arange(0, 361, 30))
+    ax.tick_params(bottom=False, labelbottom=False)
+
+    hue_colors = plt.cm.hsv(np.linspace(0, 1, 361))
+    ax_hue.imshow(hue_colors[np.newaxis, :], aspect="auto", extent=[0, 360, 0, 1])
+    ax_hue.set_xlim(0, 360)
+    ax_hue.set_axis_off()
 
     plt.tight_layout()
     target_ax_width = 12
@@ -199,7 +208,7 @@ def build_chart(
 
     print(f"Legend labels: {",".join(color_terms)}")
     if output_path:
-        plt.savefig(output_path, dpi=150, bbox_inches="tight") #, transparent=True)
+        plt.savefig(output_path, dpi=200, bbox_inches="tight") #, transparent=True)
         print(f"Saved to {output_path}")
     else:
         plt.show()

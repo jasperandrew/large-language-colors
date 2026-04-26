@@ -2,6 +2,7 @@ api_keys.py
 cleaned_color_names-*.csv
 test-*.png
 chart-output/
+tmp*
 
 ################################
 ####### PYTHON GITIGNORE #######

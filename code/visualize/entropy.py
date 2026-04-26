@@ -191,7 +191,7 @@ def main() -> None:
     parser.add_argument("--l-bins",     type=int,   default=36,        help="Number of hue bins for initial aggregation")
     parser.add_argument("--output",     type=str,   default=None,      help="Output image path (omit to display interactively)")
     parser.add_argument("--font",       type=str,   default=None,      help="Font family name or file path (auto-detects CJK if omitted)")
-    parser.add_argument("--sigma",      type=float, default=3.0,       help="Gaussian smoothing width in degrees")
+    parser.add_argument("--sigma",      type=float, default=1.5,       help="Gaussian smoothing width in degrees")
     parser.add_argument("--cmap",       type=str,   default="viridis", help="Matplotlib colormap for entropy values")
     parser.add_argument("--vmax",       type=float, default=None,      help="Fixed colormap maximum in bits")
     parser.add_argument("--min-sat",    type=float, default=0.1,       help="HSV saturation threshold")

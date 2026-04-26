@@ -84,7 +84,7 @@ def split_half_reliability(counts, n_splits=100, ci=95, seed=42):
     return {
         "JSD":      np.mean(jsd_arr),
         "JSD_CI":   (np.percentile(jsd_arr, lo), np.percentile(jsd_arr, hi)),
-        "JSD_boot": jsd_arr,  # keep this for weighted average
+        "JSD_boot": jsd_arr,
     }
 
 # --- Per-language computation ---
@@ -101,7 +101,7 @@ def compute_lang(sources):
         "human split-half": {
             "JSD":      round(sh["JSD"], 4),
             "JSD_CI":   tuple(round(x, 4) for x in sh["JSD_CI"]),
-            "JSD_boot": sh["JSD_boot"],  # now populated
+            "JSD_boot": sh["JSD_boot"],
             "Rho":      None,
             "Rho_CI":   None,
             "Rho_boot": None,
