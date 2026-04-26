@@ -15,7 +15,7 @@ Jasper Andrew (andrewj2@montclair.edu)
     ```
 5. All main scripts have help text, run `python <file> -h` for usage info
 
-### Update MLMC Data (Updated 05/2026)
+### MLMC Data (as of 05/2026)
 1. Navigate to [the MLMC repository's cleaned data folder](https://github.com/uwdata/color-naming-in-different-languages/tree/master/model/cleaned_color_data_by_lang)
 2. Download `cleaned_color_names-XX.csv` for whichever language(s) you are analyzing
 3. Run `extract_mlmc.py --rgbset <RGBSET> cleaned_color_names-XX.csv <OUT_CSV>`
