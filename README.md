@@ -1,0 +1,1 @@
+# Large Language Colors: Variation and Misalignment in LLM Color Naming
